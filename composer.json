@@ -1,0 +1,28 @@
+{
+    "name": "kruczek/legacy-proxy",
+    "description": "Legacy app bridge that allow you to forward request to legacy app.",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+        "silex/silex": "~2.0",
+        "symfony/psr-http-message-bridge": " ^1.0",
+        "zendframework/zend-diactoros": " ^1.3",
+        "guzzlehttp/guzzle": " ^6.2"
+    },
+    "require-dev": {
+        "symfony/browser-kit": "~2.8|3.0.*",
+        "phpunit/phpunit": "~5.7"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "scripts": {
+        "run": [
+            "echo 'Started web server on http://localhost:8888'",
+            "php -S localhost:8888 -t web"
+        ]
+    }
+}
