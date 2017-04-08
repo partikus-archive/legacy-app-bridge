@@ -1,5 +1,4 @@
-dist: trusty
-sudo: required
+sudo: false
 
 language: php
 
@@ -12,9 +11,12 @@ php:
     - 7.0
     - 7.1
 
+addons:
+  apt:
+    packages:
+      libcurl3-gnutls
+
 before_install:
-    - sudo apt-get --yes remove --purge libcurl4-gnutls-dev
-    - sudo apt-get --yes install libcurl4-openssl-dev
     - curl --version
 
 install:

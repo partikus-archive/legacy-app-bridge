@@ -24,6 +24,10 @@ $app->match('/{path}', function (Request $request) use ($app) {
 		\GuzzleHttp\RequestOptions::HTTP_ERRORS => true,
 		\GuzzleHttp\RequestOptions::COOKIES => new \GuzzleHttp\Cookie\CookieJar(),
 		\GuzzleHttp\RequestOptions::VERSION => 6,
+		'curl' => [
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_RETURNTRANSFER => true,
+		]
 	];
 
 	$client = new \GuzzleHttp\Client(['base_uri' => 'https://jsonplaceholder.typicode.com']);
