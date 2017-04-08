@@ -23,7 +23,7 @@ $app->match('/{path}', function (Request $request) use ($app) {
 		\GuzzleHttp\RequestOptions::VERIFY => true,
 		\GuzzleHttp\RequestOptions::HTTP_ERRORS => true,
 		\GuzzleHttp\RequestOptions::COOKIES => new \GuzzleHttp\Cookie\CookieJar(),
-		\GuzzleHttp\RequestOptions::VERSION => CURL_SSLVERSION_TLSv1_2,
+		\GuzzleHttp\RequestOptions::VERSION => 6,
 	];
 
 	$client = new \GuzzleHttp\Client(['base_uri' => 'https://jsonplaceholder.typicode.com']);
