@@ -12,8 +12,8 @@ php:
     - 7.1
 
 before_install:
-    - apt-get remove --purge libcurl4-gnutls-dev
-    - apt-get install libcurl4-openssl-dev
+    - sudo apt-get --yes remove --purge libcurl4-gnutls-dev
+    - sudo apt-get --yes install libcurl4-openssl-dev
     - curl --version
 
 install:
