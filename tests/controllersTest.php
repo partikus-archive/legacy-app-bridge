@@ -25,7 +25,7 @@ class controllersTest extends WebTestCase
 			[
 				'uri' => '/posts',
 				'method' => \Symfony\Component\HttpFoundation\Request::METHOD_POST,
-				'code' => \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+				'code' => \Symfony\Component\HttpFoundation\Response::HTTP_CREATED,
 				'content' => json_encode([
 					"userId" => 1,
 					"id" => 1,

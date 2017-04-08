@@ -20,9 +20,10 @@ $app->match('/{path}', function (Request $request) use ($app) {
 		\GuzzleHttp\RequestOptions::DECODE_CONTENT => false,
 		\GuzzleHttp\RequestOptions::TIMEOUT => 3,
 		\GuzzleHttp\RequestOptions::ALLOW_REDIRECTS => false,
-		\GuzzleHttp\RequestOptions::VERIFY => false,
-		\GuzzleHttp\RequestOptions::HTTP_ERRORS => false,
+		\GuzzleHttp\RequestOptions::VERIFY => true,
+		\GuzzleHttp\RequestOptions::HTTP_ERRORS => true,
 		\GuzzleHttp\RequestOptions::COOKIES => new \GuzzleHttp\Cookie\CookieJar(),
+		\GuzzleHttp\RequestOptions::VERSION => CURL_SSLVERSION_TLSv1_2,
 	];
 
 	$client = new \GuzzleHttp\Client(['base_uri' => 'https://jsonplaceholder.typicode.com']);
