@@ -11,6 +11,9 @@ php:
     - 7.0
     - 7.1
 
+before_install:
+    - curl --version
+
 install:
     - composer self-update
     - composer install -o

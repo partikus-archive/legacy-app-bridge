@@ -11,7 +11,7 @@ $app->get('/', function () use ($app) {
 $app->match('/{path}', function (Request $request) use ($app) {
 //	Don't treat below code as a production one just a code snippet including simple usage example.
 //	In order to send proper request we have to remove useless headers.
-	$excludedHeaders = ['Host', 'Content-Type', 'Transfer-Encoding', 'X-Proxy-URL'];
+	$excludedHeaders = ['Host', 'Transfer-Encoding', 'X-Proxy-URL'];
 //	Remove symfony/silex request attributes.
 	$excludedAttributes = ['_controller', 'path', '_route', '_route_params'];
 
@@ -25,7 +25,7 @@ $app->match('/{path}', function (Request $request) use ($app) {
 		\GuzzleHttp\RequestOptions::COOKIES => new \GuzzleHttp\Cookie\CookieJar(),
 	];
 
-	$client = new \GuzzleHttp\Client(['base_uri' => 'https://reqres.in']);
+	$client = new \GuzzleHttp\Client(['base_uri' => 'https://jsonplaceholder.typicode.com']);
 	$requestFactory = new \Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory();
 	$httpFactory = new \Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory();
 
@@ -39,11 +39,17 @@ $app->match('/{path}', function (Request $request) use ($app) {
 	$uri = $serverRequest->getUri()
 		->withHost("")
 		->withScheme("");
+
 	$serverRequest = $serverRequest->withUri($uri);
 
 //	Removing excluded headers described above
 	foreach ($excludedHeaders as $excludedHeader) {
 		$serverRequest = $serverRequest->withoutHeader($excludedHeader);
+	}
+
+	$contentType = $serverRequest->getHeader('Content-Type');
+	if (null !== $contentType && preg_match('/multipart/', $contentType[0])) {
+		$serverRequest = $serverRequest->withoutHeader('Content-Type');
 	}
 
 //	Removing excluded attributes described above
@@ -69,9 +75,13 @@ $app->match('/{path}', function (Request $request) use ($app) {
 
 		return $httpFactory->createResponse($response);
 	} catch (\Exception $exception) {
-		return $app->json([
-			'message' => $exception->getMessage(),
-		]);
+		return $app->json(
+			[
+				'message' => $exception->getMessage(), 
+				'response' => (array) $exception->getResponse(),
+			], 
+			\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR
+		);
 	}
 })->assert('path', '.*');
 
